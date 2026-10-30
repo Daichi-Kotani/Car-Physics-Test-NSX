@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tyre : MonoBehaviour
@@ -7,7 +6,8 @@ public class Tyre : MonoBehaviour
     // Serialized Fields
     [Header("Suspension")]
     [SerializeField] private float suspensionBaseDisplacement;
-    [SerializeField] private float suspensionSpringK;
+    [SerializeField] private float suspensionSpringCoefficient;
+    [SerializeField] private float suspensionDampingCoefficient;
 
     [Header("Physics")]
     [SerializeField] private float radius;
@@ -21,9 +21,6 @@ public class Tyre : MonoBehaviour
 
     private float suspensionDisplacement;
     private float suspensionVelocity;
-    private float forceX;
-    private float forceY;
-    private float forceZ;
 
     // References
     private Rigidbody thisRigidbody;
@@ -37,7 +34,6 @@ public class Tyre : MonoBehaviour
     private void FixedUpdate()
     {
         HandleSuspension();
-        ApplyForces();
         UpdateModels();
     }
 
@@ -46,28 +42,32 @@ public class Tyre : MonoBehaviour
     {
         // Raycast
         RaycastHit hit;
-        bool grounded = Physics.Raycast(transform.position + transform.up * rayStartPoint, -transform.up, out hit, rayMaxLength);
+        bool grounded = Physics.Raycast(transform.position + transform.up * (suspensionBaseDisplacement + rayStartPoint), -transform.up, out hit, rayMaxLength);
+        
+        float initialDisplacement = suspensionDisplacement;
 
-        if (!grounded)
+        if (grounded)
+            suspensionDisplacement = rayStartPoint - hit.distance + radius;
+
+        suspensionVelocity = (suspensionDisplacement - initialDisplacement) / Time.fixedDeltaTime;
+
+        float springForce = -suspensionSpringCoefficient * suspensionDisplacement - suspensionDampingCoefficient * suspensionVelocity;
+
+        Vector3 springVector = hit.normal * -springForce;
+
+        if (grounded && springForce < 0)
         {
-            forceY = 0;
-            return;
+            thisRigidbody.AddForceAtPosition(springVector, forceApplicationPoint.position, ForceMode.Force);
         }
-
-        suspensionDisplacement = rayStartPoint + suspensionBaseDisplacement - hit.distance + radius;
-
-        float springForce = -suspensionSpringK * suspensionDisplacement;
-
-        // Spring (o) | damping (x)
-        forceY = -springForce;
-
-        Debug.Log(hit.distance + " | " + springForce);
+        else
+        {
+            // suspensionDisplacement += springForce
+        }
     }
 
-    private void ApplyForces()
+    private void HandleSlip()
     {
-        if (forceY > 0)
-            thisRigidbody.AddForceAtPosition(transform.up * forceY, forceApplicationPoint.position, ForceMode.Force);
+        // Test assuming longitudinal slip  is 0%
     }
 
     private void UpdateModels()
@@ -76,13 +76,5 @@ public class Tyre : MonoBehaviour
         {
             i.localPosition = new(0f, suspensionDisplacement + suspensionBaseDisplacement, 0f);
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (thisRigidbody == null)
-            return;
-
-        Gizmos.DrawLine(transform.position, transform.position + transform.up * suspensionDisplacement);
     }
 }
