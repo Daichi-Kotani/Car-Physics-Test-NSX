@@ -6,9 +6,9 @@ public class NSX : MonoBehaviour
     // Serialized Fields
     [Header("Tyres")]
     [SerializeField] private Tyre tyreFl;
-    [SerializeField] private Tyre tyreFR;
+    [SerializeField] private Tyre tyreFr;
     [SerializeField] private Tyre tyreBl;
-    [SerializeField] private Tyre tyreBR;
+    [SerializeField] private Tyre tyreBr;
 
     [Header("Popups")]
     [SerializeField] private Transform popups;
@@ -22,6 +22,12 @@ public class NSX : MonoBehaviour
     // References
     private Rigidbody thisRigidbody;
 
+    // Input
+    public bool lightInput = false;
+    public float throttleInput;
+    public float brakeInput;
+    public float steeringInput;
+
     // Unity Messages
     private void Awake()
     {
@@ -31,10 +37,14 @@ public class NSX : MonoBehaviour
     private void Update()
     {
         ToggleLights();
+        UpdateSteering();
+
+        thisRigidbody.AddRelativeForce(new(0f, 0f, 1000f * throttleInput));
+        thisRigidbody.AddRelativeForce(new(0f, 0f, -4000f * brakeInput));
     }
 
     // Methods
-    private void ToggleLights()
+    public void ToggleLights()
     {
         float speed = popupSpeed
              * (lightInput
@@ -52,12 +62,13 @@ public class NSX : MonoBehaviour
         popups.localRotation = Quaternion.Euler(popupPosition, 0f, 0f);
     }
 
-    // Input
-    private bool lightInput = false;
-    private float throttleInput;
-    private float brakeInput;
-    private float steeringInput;
+    private void UpdateSteering()
+    {
+        tyreFl.steering = steeringInput * 20;
+        tyreFr.steering = steeringInput * 20;
+    }
 
+    // Input
     public void GetLightToggle(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -100,13 +111,5 @@ public class NSX : MonoBehaviour
         {
             steeringInput = 0f;
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (thisRigidbody == null)
-            return;
-
-        Gizmos.DrawLine(transform.position, transform.position - transform.up * thisRigidbody.mass * 9.81f);
     }
 }

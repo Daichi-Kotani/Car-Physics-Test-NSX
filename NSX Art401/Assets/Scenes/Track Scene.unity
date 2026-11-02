@@ -170,6 +170,7 @@ MonoBehaviour:
   suspensionBaseDisplacement: -0.13
   suspensionSpringCoefficient: 37265.3
   suspensionDampingCoefficient: 5658.8
+  suspensionMotionRatio: 1
   radius: 0.4
   forceApplicationPoint: {fileID: 684747470}
   rayStartPoint: 0.01
@@ -182,6 +183,12 @@ MonoBehaviour:
   rotatingObjects:
   - {fileID: 9180783338200102249}
   - {fileID: 3610716696268413208}
+  externalForceCurveAmount: 10
+  externalForcePeakPoint: 4000
+  slipAnglePeakPoint: 50
+  corneringStiffness: 1500
+  debug: 0
+  steering: 0
 --- !u!1 &254534112
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,119 +224,6 @@ Transform:
   - {fileID: 216309663}
   m_Father: {fileID: 7985042913957958941}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!1 &311413974
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 311413978}
-  - component: {fileID: 311413977}
-  - component: {fileID: 311413976}
-  - component: {fileID: 311413975}
-  m_Layer: 0
-  m_Name: Plane
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!64 &311413975
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 311413974}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &311413976
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 311413974}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &311413977
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 311413974}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &311413978
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 311413974}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,8 +311,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22975293, y: 6.1197096e-23, z: -1.4446672e-23, w: 0.973249}
-  m_LocalPosition: {x: 0, y: 3.2, z: -6}
+  m_LocalRotation: {x: 0, y: 0.9913306, z: -0.13139133, w: 0}
+  m_LocalPosition: {x: 0, y: 2.4, z: 4.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -485,8 +379,8 @@ MonoBehaviour:
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
-  UpdateMethod: 2
-  BlendUpdateMethod: 1
+  UpdateMethod: 0
+  BlendUpdateMethod: 0
   LensModeOverride:
     Enabled: 0
     DefaultMode: 2
@@ -678,6 +572,7 @@ MonoBehaviour:
   suspensionBaseDisplacement: -0.13
   suspensionSpringCoefficient: 31381.3
   suspensionDampingCoefficient: 3333.6
+  suspensionMotionRatio: 1
   radius: 0.3
   forceApplicationPoint: {fileID: 1460945736}
   rayStartPoint: 0.01
@@ -690,6 +585,12 @@ MonoBehaviour:
   rotatingObjects:
   - {fileID: 6379477823322511220}
   - {fileID: 3709163167158113534}
+  externalForceCurveAmount: 10
+  externalForcePeakPoint: 4000
+  slipAnglePeakPoint: 50
+  corneringStiffness: 1500
+  debug: 0
+  steering: 0
 --- !u!1 &684747469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,6 +931,7 @@ MonoBehaviour:
   suspensionBaseDisplacement: -0.13
   suspensionSpringCoefficient: 31381.3
   suspensionDampingCoefficient: 3333.6
+  suspensionMotionRatio: 1
   radius: 0.3
   forceApplicationPoint: {fileID: 1028302063}
   rayStartPoint: 0.01
@@ -1042,6 +944,12 @@ MonoBehaviour:
   rotatingObjects:
   - {fileID: 1446514460549671845}
   - {fileID: 5321297632084592079}
+  externalForceCurveAmount: 10
+  externalForcePeakPoint: 4000
+  slipAnglePeakPoint: 50
+  corneringStiffness: 1500
+  debug: 1
+  steering: 0
 --- !u!1 &1440798689
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,8 +1047,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1835771918}
   - component: {fileID: 1835771921}
-  - component: {fileID: 1835771920}
-  - component: {fileID: 1835771919}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1156,61 +1062,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835771917}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2297529, y: 5.850812e-23, z: -3.0560606e-24, w: 0.973249}
-  m_LocalPosition: {x: 0, y: 3, z: -6}
+  m_LocalRotation: {x: 0.13139133, y: 0, z: 0, w: 0.9913306}
+  m_LocalPosition: {x: 0, y: 2.2, z: -4.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7985042913957958941}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1835771919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1835771917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f38bda98361e1de48a4ca2bd86ea3c17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineRotationComposer
-  Composition:
-    ScreenPosition: {x: 0, y: 0}
-    DeadZone:
-      Enabled: 0
-      Size: {x: 0.2, y: 0.2}
-    HardLimits:
-      Enabled: 0
-      Size: {x: 0.8, y: 0.8}
-      Offset: {x: 0, y: 0}
-  CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 0.5, y: 0.5}
-  Lookahead:
-    Enabled: 0
-    Time: 0
-    Smoothing: 0
-    IgnoreY: 0
---- !u!114 &1835771920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1835771917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b617507da6d07e749b7efdb34e1173e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineFollow
-  TrackerSettings:
-    BindingMode: 4
-    PositionDamping: {x: 1, y: 1, z: 1}
-    AngularDampingMode: 0
-    RotationDamping: {x: 1, y: 1, z: 1}
-    QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 3, z: -6}
+  m_LocalEulerAnglesHint: {x: 15.1, y: 0, z: 0}
 --- !u!114 &1835771921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1370,6 +1228,7 @@ MonoBehaviour:
   suspensionBaseDisplacement: -0.13
   suspensionSpringCoefficient: 37265.3
   suspensionDampingCoefficient: 5658.8
+  suspensionMotionRatio: 1
   radius: 0.4
   forceApplicationPoint: {fileID: 722136833}
   rayStartPoint: 0.01
@@ -1382,6 +1241,12 @@ MonoBehaviour:
   rotatingObjects:
   - {fileID: 3830324001149092674}
   - {fileID: 291465030265502340}
+  externalForceCurveAmount: 10
+  externalForcePeakPoint: 4000
+  slipAnglePeakPoint: 50
+  corneringStiffness: 1500
+  debug: 0
+  steering: 0
 --- !u!23 &101498222880629282
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4434,7 +4299,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7321518830562742183}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4444,7 +4309,7 @@ Transform:
   - {fileID: 1440798690}
   - {fileID: 254534113}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!54 &7985042913957958942
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4485,9 +4350,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NSX
   tyreFl: {fileID: 664503012}
-  tyreFR: {fileID: 1268653629}
+  tyreFr: {fileID: 1268653629}
   tyreBl: {fileID: 2056482212}
-  tyreBR: {fileID: 216309664}
+  tyreBr: {fileID: 216309664}
   popups: {fileID: 1848927195}
   popupUpPosition: 0
   popupDownPosition: -19
@@ -5141,5 +5006,4 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 7985042913957958941}
-  - {fileID: 311413978}
   - {fileID: 944745193}
